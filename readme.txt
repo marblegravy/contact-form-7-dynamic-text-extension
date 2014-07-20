@@ -9,6 +9,14 @@ Stable tag: 1.1.0.2
 This plugin provides 2 new tag types for the Contact Form 7 Plugin. It allows the dynamic generation of content for a text input box via any shortcode.
 It also offers dynamic hidden field functionality, which can be utilized to dynamically set the Email Recipient (To:) address. 
 
+**********************NOTE*******************
+This is just a patched version of this plugin that works with Contact Form 3.7.
+It solves the display bug reported on Wordpress.org at:
+ * http://wordpress.org/support/topic/field-options-wont-show-up?replies=5 and
+ * http://wordpress.org/support/topic/error-mesages-plugin-doesnt-work?replies=9
+ 
+*********************************************
+
 == Description ==
 
 Contact Form 7 is an excellent WordPress plugin, and the CF7 DTX Plugin makes it even more awesome by adding dynamic content capabilities.
