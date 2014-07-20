@@ -13,7 +13,7 @@ License: GPL2
 /*  Copyright 2010-2014  Chris Mavricos, SevenSpark (email : chris@sevenspark.com)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 2, as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -34,19 +34,19 @@ function wpcf7_dynamictext_init(){
 
 	if(function_exists('wpcf7_add_shortcode')){
 
-		/* Shortcode handler */		
+		/* Shortcode handler */
 		wpcf7_add_shortcode( 'dynamictext', 'wpcf7_dynamictext_shortcode_handler', true );
 		wpcf7_add_shortcode( 'dynamictext*', 'wpcf7_dynamictext_shortcode_handler', true );
 		wpcf7_add_shortcode( 'dynamichidden', 'wpcf7_dynamichidden_shortcode_handler', true );
-	
+
 	}
-	
+
 	add_filter( 'wpcf7_validate_dynamictext', 'wpcf7_dynamictext_validation_filter', 10, 2 );
 	add_filter( 'wpcf7_validate_dynamictext*', 'wpcf7_dynamictext_validation_filter', 10, 2 );
-	
+
 	add_action( 'admin_init', 'wpcf7_add_tag_generator_dynamictext', 15 );
 	add_action( 'admin_init', 'wpcf7_add_tag_generator_dynamichidden', 16 );
-	
+
 }
 add_action( 'plugins_loaded', 'wpcf7_dynamictext_init' , 20 );
 
@@ -55,7 +55,7 @@ add_action( 'plugins_loaded', 'wpcf7_dynamictext_init' , 20 );
  *************************************************************/
 
 function wpcf7_dynamictext_shortcode_handler( $tag ) {
-	
+
 	$wpcf7_contact_form = WPCF7_ContactForm::get_current();
 
 	if ( ! is_array( $tag ) )
@@ -124,10 +124,10 @@ function wpcf7_dynamictext_shortcode_handler( $tag ) {
 	} else {
 		$value = isset( $values[0] ) ? $values[0] : '';
 	}
-	
+
 	$scval = do_shortcode('['.$value.']');
 	if($scval != '['.$value.']') $value = $scval;
-	
+
 	//echo '<pre>'; print_r($options);echo '</pre>';
 	$readonly = '';
 	if(in_array('uneditable', $options)){
@@ -149,7 +149,7 @@ function wpcf7_dynamictext_shortcode_handler( $tag ) {
 /* Validation filter */
 
 function wpcf7_dynamictext_validation_filter( $result, $tag ) {
-	
+
 	$wpcf7_contact_form = WPCF7_ContactForm::get_current();
 
 	$type = $tag['type'];
@@ -177,7 +177,8 @@ function wpcf7_add_tag_generator_dynamictext() {
 	}
 }
 
-function wpcf7_tg_pane_dynamictext_( &$contact_form ) {
+function wpcf7_tg_pane_dynamictext_( $contact_form ) {
+	 var_dump($contact_form);
 	wpcf7_tg_pane_dynamictext( 'dynamictext' );
 }
 
@@ -231,7 +232,7 @@ function wpcf7_tg_pane_dynamictext( $type = 'dynamictext' ) {
  * DynamicHidden Shortcode
  *************************************************************/
 function wpcf7_dynamichidden_shortcode_handler( $tag ) {
-	
+
 	$wpcf7_contact_form = WPCF7_ContactForm::get_current();
 
 	if ( ! is_array( $tag ) )
@@ -272,11 +273,11 @@ function wpcf7_dynamichidden_shortcode_handler( $tag ) {
 	} else {
 		$value = isset( $values[0] ) ? $values[0] : '';
 	}
-	
+
 	$scval = do_shortcode('['.$value.']');
 	if($scval != '['.$value.']') $value = $scval;
 	//echo '<pre>'; print_r($options);echo '</pre>';
-	
+
 	$html = '<input type="hidden" name="' . $name . '" value="' . esc_attr( $value ) . '"' . $atts . ' />';
 
 	//No need to validate, it's a hidden field - we could validate by checking the value hasn't changed, but that seems overkill I think
@@ -299,7 +300,7 @@ function wpcf7_add_tag_generator_dynamichidden() {
 	}
 }
 
-function wpcf7_tg_pane_dynamichidden_( &$contact_form ) {
+function wpcf7_tg_pane_dynamichidden_( $contact_form ) {
 	wpcf7_tg_pane_dynamichidden( 'dynamichidden' );
 }
 
@@ -338,13 +339,13 @@ function wpcf7_tg_pane_dynamichidden( $type = 'dynamichidden' ) {
 
 /*****************************************************
  * CF7 DTX Included Shortcodes
- * 
+ *
  * Used like this:
- * 
+ *
  * CF7_GET val='value'
- * 
+ *
  * No [] and single quotes ' rather than double "
- * 
+ *
  *****************************************************/
 
 /* Insert a $_GET variable */
@@ -365,7 +366,7 @@ function cf7_bloginfo($atts){
 	extract(shortcode_atts(array(
 		'show' => 'name'
 	), $atts));
-	
+
 	return get_bloginfo($show);
 }
 add_shortcode('CF7_bloginfo', 'cf7_bloginfo');
@@ -389,7 +390,7 @@ function cf7_get_post_var($atts){
 	extract(shortcode_atts(array(
 		'key' => 'post_title',
 	), $atts));
-	
+
 	switch($key){
 		case 'slug':
 			$key = 'post_name';
@@ -398,7 +399,7 @@ function cf7_get_post_var($atts){
 			$key = 'post_title';
 			break;
 	}
-	
+
 	global $post;
 	//echo '<pre>'; print_r($post); echo '</pre>';
 	$val = $post->$key;
@@ -416,12 +417,12 @@ function cf7_url(){
  	} else {
   		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
  	}
- 	return $pageURL;	
+ 	return $pageURL;
 }
 add_shortcode('CF7_URL', 'cf7_url');
 
 /* Insert a Custom Post Field
- * New in 1.0.4 
+ * New in 1.0.4
  */
 function cf7_get_custom_field($atts){
 	extract(shortcode_atts(array(
@@ -429,28 +430,28 @@ function cf7_get_custom_field($atts){
 		'post_id' => -1,
 		'obfuscate'	=> 'off'
 	), $atts));
-	
+
 	if($post_id < 0){
 		global $post;
 		if(isset($post)) $post_id = $post->ID;
 	}
-	
+
 	if($post_id < 0 || empty($key)) return '';
-		
+
 	$val = get_post_meta($post_id, $key, true);
-	
+
 	if($obfuscate == 'on'){
 		$val = cf7dtx_obfuscate($val);
 	}
-	
+
 	return $val;
-	
+
 }
 add_shortcode('CF7_get_custom_field', 'cf7_get_custom_field');
 
 /* Insert information about the current user
- * New in 1.0.4 
- * See http://codex.wordpress.org/Function_Reference/get_currentuserinfo 
+ * New in 1.0.4
+ * See http://codex.wordpress.org/Function_Reference/get_currentuserinfo
  */
 function cf7_get_current_user($atts){
 	extract(shortcode_atts(array(
