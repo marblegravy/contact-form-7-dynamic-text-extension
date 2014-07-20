@@ -178,7 +178,6 @@ function wpcf7_add_tag_generator_dynamictext() {
 }
 
 function wpcf7_tg_pane_dynamictext_( $contact_form ) {
-	 var_dump($contact_form);
 	wpcf7_tg_pane_dynamictext( 'dynamictext' );
 }
 
